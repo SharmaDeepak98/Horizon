@@ -30,6 +30,7 @@ const MobileNav = ({ user }: SiderbarProps) => {
           />
         </SheetTrigger>
         <SheetContent side="left" className="border-none bg-white">
+
           <Link
             href={"/"}
             className="flex cursor-pointer gap-1 px-4 mb-8 items-center"
@@ -42,7 +43,6 @@ const MobileNav = ({ user }: SiderbarProps) => {
             />
             <h1 className="text-26 font-ibm-plex-serif font-bold ">Bestank</h1>
           </Link>
-
           <div className="mobilenav-sheet">
             <SheetClose asChild>
               <nav className="flex h-full flex-col text-white pt-16 gap-6">
