@@ -17,9 +17,12 @@ import { CustomInspectFunction } from "util";
 import { formSchema } from "@/lib/utils";
 import { Control } from "react-hook-form";
 
+
+const authFormSchema = formSchema('sign-up');
+
 type CustomInputProps = {
-  control: Control<z.infer<typeof formSchema>>;
-  name: FieldPath<z.infer<typeof formSchema>>;
+  control: Control<z.infer<typeof authFormSchema>>;
+  name: FieldPath<z.infer<typeof authFormSchema>>;
   label: string;
   placeholder: string;
 };
