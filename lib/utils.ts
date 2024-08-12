@@ -195,22 +195,20 @@ export const getTransactionStatus = (date: Date) => {
   return date > twoDaysAgo ? "Processing" : "Success";
 };
 
-export const formSchema = (type = 'sign-in' ||'sign-up')=>z.object({
-
-  // sign-up
-  email: type === 'sign-up'? z.string().optional() : z.string().email({ message: "Invalid email address." }),
-  password: type === 'sign-up'? z.string().optional() : z.string().min(6, {
-    message: "Password must be at least 6 characters.",
-  }),
-  firstName: type === 'sign-up'? z.string().optional() : z.string().min(2, "First Name must be at least 2 characters."),
-  lastName: type === 'sign-up'? z.string().optional() : z.string().min(2, "Last Name must be at least 2 characters."),
-  address: type === 'sign-up'? z.string().optional() : z.string().max(50, "Address must be at most 50 characters."),
-  state: type === 'sign-up'? z.string().optional() : z.string().min(2, "State must be at least 2 characters.").max(12, "State must be at most 12 characters."),
-  postalCode: type === 'sign-up'? z.string().optional() : z.string().min(3, "Postal Code must be at least 3 characters.").max(6, "Postal Code must be at most 6 characters."),
-
-//both sign-in and sign-up
-  dob: z.string().min(10, "Date of Birth must be at least 10 characters."),
-  ssn: z.string().min(9, "SSN must be at least 9 characters."),
-
-
-});
+export const authFormSchema = (type: string) =>
+  z.object({
+    // sign up
+    firstName: type === "sign-in" ? z.string().optional() : z.string().min(3),
+    lastName: type === "sign-in" ? z.string().optional() : z.string().min(3),
+    address: type === "sign-in" ? z.string().optional() : z.string().max(50),
+    city: type === "sign-in" ? z.string().optional() : z.string().max(50),
+    state:
+      type === "sign-in" ? z.string().optional() : z.string().min(2).max(2),
+    postalCode:
+      type === "sign-in" ? z.string().optional() : z.string().min(3).max(6),
+    dob: type === "sign-in" ? z.string().optional() : z.string().min(3),
+    ssn: type === "sign-in" ? z.string().optional() : z.string().min(3),
+    // both
+    email: z.string().email(),
+    password: z.string().min(8),
+  });

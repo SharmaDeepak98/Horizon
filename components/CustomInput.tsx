@@ -13,16 +13,15 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Form } from "react-hook-form";
-import { CustomInspectFunction } from "util";
-import { formSchema } from "@/lib/utils";
+import { authFormSchema } from "@/lib/utils";
 import { Control } from "react-hook-form";
 
 
-const authFormSchema = formSchema('sign-up');
+const formSchema = authFormSchema('sign-up');
 
-type CustomInputProps = {
-  control: Control<z.infer<typeof authFormSchema>>;
-  name: FieldPath<z.infer<typeof authFormSchema>>;
+type CustomInput= {
+  control: Control<z.infer<typeof formSchema>>;
+  name: FieldPath<z.infer<typeof formSchema>>;
   label: string;
   placeholder: string;
 };
@@ -32,9 +31,10 @@ const CustomInput = ({
   name,
   label,
   placeholder,
-}: CustomInputProps) => {
+}: CustomInput) => {
   return (
     <FormField
+    key={name}
       control={control}
       name={name}
       render={({ field }) => (

@@ -17,36 +17,33 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CustomInput from "./CustomInput";
-import { formSchema } from "@/lib/utils";
+import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 
-const AuthForm = ({ type = "sign-in" || "sign-up" }) => {
+const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-
-  const authFormSchema = formSchema(type)
+  const formSchema = authFormSchema(type);
 
   // Define form
-  const form = useForm<z.infer<typeof authFormSchema>>({
-    resolver: zodResolver(authFormSchema),
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-
+      email: "",
+      password: ''
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof authFormSchema>) {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
+    console.log("hello");
     setIsLoading(true);
-
-    setTimeout(() => {}, 2000);
     console.log(values);
     setIsLoading(false);
-  }
+  };
 
   return (
     <section className="auth-form">
@@ -147,7 +144,7 @@ const AuthForm = ({ type = "sign-in" || "sign-up" }) => {
                 placeholder="Enter your Password"
               />
               <div className="flex flex-col gap-4">
-                <Button type="submit" className="form-btn">
+                <Button type="submit" disabled={isLoading} className="form-btn">
                   {isLoading ? (
                     <>
                       <Loader2 className="animate-spin" />
