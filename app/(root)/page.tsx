@@ -1,26 +1,13 @@
 import Header from "@/components/Header";
 import RightSideBar from "@/components/RightSideBar";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
+import { getLoggedInUser } from "@/lib/user.actions";
+import { get } from "http";
 
 
-const Home = () => {
+const Home = async() => {
 
-  const loggedIn = {
-  
-    $id:"1",
-    firstName:"Deepak",
-    lastName:"Sharma",
-  email: "example@abc.com",
-  userId: "123",
-  dwollaCustomerUrl: "www.example.com",
-  dwollaCustomerId: "abcd",
-  address1: "addressOfUser",
-  city: "myCity",
-  state: "myState",
-  postalCode: "123123",
-  dateOfBirth: "12-12-2001",
-  ssn: "12"
-  }
+  const loggedInUser = await getLoggedInUser();
 
   return (
     <section className="home">
@@ -29,7 +16,7 @@ const Home = () => {
           <Header
             type="greeting"
             title="Welcome"
-            user={loggedIn?.firstName || "Guest"}
+            user={loggedInUser?.name.split(" ")[0] || "Guest"}
             subtext="Access and manage your account and transactions efficiently."
           />
 
@@ -42,7 +29,7 @@ const Home = () => {
 USER TRANSACTION
       </div>
     <RightSideBar 
-     user={loggedIn}
+     user={loggedInUser}
      transactions={[]}
      banks={[{currentBalance:123},{currentBalance:325}]}
      />

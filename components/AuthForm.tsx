@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { set, z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -19,8 +19,11 @@ import { Input } from "@/components/ui/input";
 import CustomInput from "./CustomInput";
 import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
+import { SignUp ,SignIn} from "@/lib/user.actions";
+import { useRouter } from "next/navigation";
 
 const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
+  const router = useRouter()
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,13 +39,28 @@ const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
   });
 
   // 2. Define a submit handler.
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log("hello");
-    setIsLoading(true);
-    console.log(values);
-    setIsLoading(false);
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+  try {
+   //Signup with Appwrite and create plaid token 
+setIsLoading(true)
+   if (type === "sign-up") {
+  const  newUser = await SignUp(data)
+   setUser(newUser) 
+   
+   }
+
+   if (type === "sign-in") {
+   const response = await SignIn({email:data.email, password:data.password})
+if(response) router.push('/')
+    
+   }
+
+  } catch (e) {
+   console.log(e) 
+  }finally{
+    setIsLoading(false)
+  }
+  
   };
 
   return (
