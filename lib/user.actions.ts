@@ -14,33 +14,28 @@ import { parseStringify } from "./utils";
 //             [Query.equal('userId', [userId])]
 //         )
 //       return parseStringify(user.documents[0]);
-        
+
 //     } catch (error) {
 //         console.log(error)
-        
+
 //     }
 // }
 
-export const SignIn = async({
-  email,
-  password,
-}: signInProps) => {
+export const SignIn = async ({ email, password }: signInProps) => {
   try {
     const { account } = await createAdminClient();
-    const session= await account.createEmailPasswordSession(email, password);
+    const session = await account.createEmailPasswordSession(email, password);
 
-//     cookies().set("appwrite-session", session.secret, {
-// path: "/",
-// httpOnly: true,
-// sameSite: "strict",
-// secure: true,
-//     }
-    
-return parseStringify(session)
+        cookies().set("appwrite-session", session.secret, {
+    path: "/",
+    httpOnly: true,
+    sameSite: "strict",
+    secure: true,
+        })
 
-  
+    return parseStringify(session);
   } catch (error) {
-    console.log("Error",error);
+    console.log("Error", error);
   }
 };
 
@@ -63,7 +58,7 @@ export const SignUp = async (userData: SignUpParams) => {
       sameSite: "strict",
       secure: true,
     });
-return parseStringify(newUserAccount)
+    return parseStringify(newUserAccount);
   } catch (error) {
     console.log(error);
   }
@@ -78,7 +73,6 @@ export async function getLoggedInUser() {
   } catch (error) {
     return null;
   }
-
 }
 
 export async function logout() {
@@ -86,10 +80,9 @@ export async function logout() {
     const { account } = await createSessionClient();
     cookies().delete("appwrite-session");
     await account.deleteSession("current");
-}
-    catch (error) {
-        console.log(error);
-    }
-
-  
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
 }

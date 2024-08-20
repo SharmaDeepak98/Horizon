@@ -19,11 +19,11 @@ import { Input } from "@/components/ui/input";
 import CustomInput from "./CustomInput";
 import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
-import { SignUp ,SignIn} from "@/lib/user.actions";
+import { SignUp, SignIn } from "@/lib/user.actions";
 import { useRouter } from "next/navigation";
 
 const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
-  const router = useRouter()
+  const router = useRouter();
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,33 +34,38 @@ const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      password: ''
+      password: "",
     },
   });
 
   // 2. Define a submit handler.
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-  try {
-   //Signup with Appwrite and create plaid token 
-setIsLoading(true)
-   if (type === "sign-up") {
-  const  newUser = await SignUp(data)
-   setUser(newUser) 
-   
-   }
+    try {
+      //Signup with Appwrite and create plaid token
+      setIsLoading(true);
+      if (type === "sign-up") {
+        const newUser = await SignUp(data);
+        setUser(newUser);
+          router.push("/");
+      }
 
-   if (type === "sign-in") {
-   const response = await SignIn({email:data.email, password:data.password})
-if(response) router.push('/')
-    
-   }
-
-  } catch (e) {
-   console.log(e) 
-  }finally{
-    setIsLoading(false)
-  }
-  
+      else if (type === "sign-in") {
+        const response = await SignIn({
+          email: data.email,
+          password: data.password,
+        });
+        if (response) {
+          
+          setUser(response);
+          console.log(response);
+          router.push("/");
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

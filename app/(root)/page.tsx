@@ -4,9 +4,7 @@ import TotalBalanceBox from "@/components/TotalBalanceBox";
 import { getLoggedInUser } from "@/lib/user.actions";
 import { get } from "http";
 
-
-const Home = async() => {
-
+const Home = async () => {
   const loggedInUser = await getLoggedInUser();
 
   return (
@@ -26,13 +24,13 @@ const Home = async() => {
             totalCurrentBalance={9889}
           />
         </header>
-USER TRANSACTION
+        USER TRANSACTION
       </div>
-    <RightSideBar 
-     user={loggedInUser}
-     transactions={[]}
-     banks={[{currentBalance:123},{currentBalance:325}]}
-     />
+      <RightSideBar
+        user={loggedInUser!}
+        transactions={[]}
+        banks={[{ currentBalance: 123 }, { currentBalance: 325 }]}
+      />
     </section>
   );
 };
