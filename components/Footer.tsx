@@ -1,4 +1,4 @@
-import { logout } from "@/lib/user.actions";
+import { logout } from "@/lib/actions/user.actions";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 

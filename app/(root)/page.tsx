@@ -1,8 +1,9 @@
 import Header from "@/components/Header";
 import RightSideBar from "@/components/RightSideBar";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
-import { getLoggedInUser } from "@/lib/user.actions";
+import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { get } from "http";
+import { useRouter } from "next/navigation";
 
 const Home = async () => {
   const loggedInUser = await getLoggedInUser();

@@ -19,8 +19,9 @@ import { Input } from "@/components/ui/input";
 import CustomInput from "./CustomInput";
 import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
-import { SignUp, SignIn } from "@/lib/user.actions";
+import { SignUp, SignIn } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
+import PlaidLink from "./PlaidLink";
 
 const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
   const router = useRouter();
@@ -46,16 +47,13 @@ const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
       if (type === "sign-up") {
         const newUser = await SignUp(data);
         setUser(newUser);
-          router.push("/");
-      }
-
-      else if (type === "sign-in") {
+        router.push("/");
+      } else if (type === "sign-in") {
         const response = await SignIn({
           email: data.email,
           password: data.password,
         });
         if (response) {
-          
           setUser(response);
           console.log(response);
           router.push("/");
@@ -90,9 +88,11 @@ const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
           </h1>
         </div>
       </header>
-      {user ? (
-        <div className="flex flex-col gap-4">{/* PlaidLink */}</div>
-      ) : (
+      {/* {user ? ( */}
+        <div className="flex flex-col gap-4">
+          <PlaidLink user={user!} variant="primary" />
+        </div>
+      {/* ) : ( */}
         <>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -193,7 +193,7 @@ const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
             </Link>
           </footer>
         </>
-      )}
+      {/* )} */}
     </section>
   );
 };
