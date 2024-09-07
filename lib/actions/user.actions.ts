@@ -3,10 +3,10 @@
 import { cookies } from "next/headers";
 import { createAdminClient, createSessionClient } from "../appwrite";
 import { ID, Query } from "node-appwrite";
-import { encryptId, parseStringify } from "../utils";
+import { encryptId, extractCustomerIdFromUrl, parseStringify } from "../utils";
 import { plaidClient } from "../plaid";
 import { CountryCode, ProcessorTokenCreateRequest, ProcessorTokenCreateRequestProcessorEnum, Products } from "plaid";
-import { addFundingSource } from "./dwolla.actions";
+import { addFundingSource, createDwollaCustomer } from "./dwolla.actions";
 import { revalidatePath } from "next/cache";
 
 // export const getUserInfo = async ({userId}: {userId: string}) => {
@@ -51,15 +51,27 @@ export const SignIn = async ({ email, password }: signInProps) => {
 
 export const SignUp = async (userData: SignUpParams) => {
   const { email, password, firstName, lastName } = userData;
+
+  let newUserAccount;
+
   try {
     const { account } = await createAdminClient();
 
-    const newUserAccount = await account.create(
+     newUserAccount = await account.create(
       ID.unique(),
       email,
       password,
       `${firstName} ${lastName}`
     );
+
+    if (!newUserAccount) throw new Error("Could not create user account");
+
+    const dwollaCustomerUrl = await createDwollaCustomer({...userData,type: "personal"});
+
+    if (!dwollaCustomerUrl) throw new Error("Could not create Dwolla customer");
+    const dwollaCustomerId  = extractCustomerIdFromUrl(dwollaCustomerUrl);
+
+
     const session = await account.createEmailPasswordSession(email, password);
 
     cookies().set("appwrite-session", session.secret, {

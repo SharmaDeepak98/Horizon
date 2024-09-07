@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import CustomInput from "./CustomInput";
 import { authFormSchema } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
+import { Loader2, SunSnow } from "lucide-react";
 import { SignUp, SignIn } from "@/lib/actions/user.actions";
 import { useRouter } from "next/navigation";
 import PlaidLink from "./PlaidLink";
@@ -41,11 +41,24 @@ const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
 
   // 2. Define a submit handler.
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
+      setIsLoading(true);
     try {
       //Signup with Appwrite and create plaid token
-      setIsLoading(true);
       if (type === "sign-up") {
-        const newUser = await SignUp(data);
+
+        const userData = {
+          firstName:data.firstName!,
+          lastName:data.lastName!,
+          address:data.address!,
+          state:data.state!,
+          postalCode:data.postalCode!,
+          dob:data.dob!,
+          ssn:data.ssn!,
+          email:data.email,
+          password:data.password
+        }
+
+        const newUser = await SignUp(userData);
         setUser(newUser);
         router.push("/");
       } else if (type === "sign-in") {
