@@ -54,9 +54,21 @@ export const createOnDemandAuthorization = async () => {
 export const createDwollaCustomer = async (
   newCustomer: NewDwollaCustomerParams
 ) => {
+  const customer = {
+    "firstName": newCustomer.firstName,
+  "lastName": newCustomer.lastName,
+  "email": newCustomer.email,
+  "type": newCustomer.type,
+  "address1": newCustomer.address,
+  "city": newCustomer.address,
+  "state": newCustomer.state,
+  "postalCode": newCustomer.postalCode,
+  "dateOfBirth": newCustomer.dob,
+  "ssn": newCustomer.ssn,
+  }
   try {
     return await dwollaClient
-      .post("customers", newCustomer)
+      .post("customers", customer)
       .then((res) => res.headers.get("location"));
   } catch (err) {
     console.error("Creating a Dwolla Customer Failed: ", err);

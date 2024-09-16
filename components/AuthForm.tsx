@@ -60,7 +60,6 @@ const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
 
         const newUser = await SignUp(userData);
         setUser(newUser);
-        router.push("/");
       } else if (type === "sign-in") {
         const response = await SignIn({
           email: data.email,
@@ -68,7 +67,6 @@ const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
         });
         if (response) {
           setUser(response);
-          console.log(response);
           router.push("/");
         }
       }
@@ -101,11 +99,11 @@ const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
           </h1>
         </div>
       </header>
-      {/* {user ? ( */}
+       {user ? ( 
         <div className="flex flex-col gap-4">
           <PlaidLink user={user!} variant="primary" />
         </div>
-      {/* ) : ( */}
+       ) : ( 
         <>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -206,7 +204,7 @@ const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
             </Link>
           </footer>
         </>
-      {/* )} */}
+       )} 
     </section>
   );
 };
