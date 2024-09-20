@@ -3,10 +3,12 @@ import RightSideBar from "@/components/RightSideBar";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { get } from "http";
+import { getAccounts } from "@/lib/actions/bank.actions";
 import { useRouter } from "next/navigation";
 
 const Home = async () => {
   const loggedInUser = await getLoggedInUser();
+  const account = await getAccounts({ userId: loggedInUser!.$id });
 
   return (
     <section className="home">

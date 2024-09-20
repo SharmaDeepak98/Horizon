@@ -9,27 +9,30 @@ import { CountryCode, ProcessorTokenCreateRequest, ProcessorTokenCreateRequestPr
 import { addFundingSource, createDwollaCustomer } from "./dwolla.actions";
 import { revalidatePath } from "next/cache";
 
-// export const getUserInfo = async ({userId}: {userId: string}) => {
-//     try {
-//         const { database } = await createAdminClient();
-//         const user=await database.listDocuments(
-//             process.env.APPWRITE_Database_ID,
-//             process.env.APPWRITE_COLLECTION_ID,
-//             [Query.equal('userId', [userId])]
-//         )
-//       return parseStringify(user.documents[0]);
-
-//     } catch (error) {
-//         console.log(error)
-
-//     }
-// }
 
 const {
   APPWRITE_DATABASE_ID:DATABASE_ID,
   APPWRITE_USER_COLLECTION_ID: USER_COLLECTION_ID,
   APPWRITE_BANK_COLLECTION_ID: BANK_COLLECTION_ID
 } = process.env;
+
+export const getUserInfo = async ({userId}: {userId: string}) => {
+
+    try {
+        const { database } = await createAdminClient();
+        const user=await database.listDocuments(
+            DATABASE_ID!,
+            USER_COLLECTION_ID!,
+            [Query.equal('userId', [userId])]
+        )
+      return parseStringify(user.documents[0]);
+
+    } catch (error) {
+        console.log(error)
+
+    }
+}
+
 
 export const SignIn = async ({ email, password }: signInProps) => {
   try {
@@ -99,7 +102,9 @@ export const SignUp = async ({password,...userData}: SignUpParams) => {
 export async function getLoggedInUser() {
   try {
     const { account } = await createSessionClient();
-    return await account.get();
+    const result =  await account.get();
+
+    const user = await getUserInfo({ userId: result.$id });
   } catch (error) {
     return null;
   }
