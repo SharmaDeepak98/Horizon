@@ -6,9 +6,14 @@ import { get } from "http";
 import { getAccounts } from "@/lib/actions/bank.actions";
 import { useRouter } from "next/navigation";
 
-const Home = async () => {
+const Home = async ({searchParams:{id,page}}:SearchParamProps) => {
   const loggedInUser = await getLoggedInUser();
-  const account = await getAccounts({ userId: loggedInUser!.$id });
+  const accounts = await getAccounts({ userId: loggedInUser!.$id });
+
+  if (!accounts) return;
+
+  const accountData = accounts.data;
+  const appwriteItemId = (id as string) || accountData[0].appwriteItemId;
 
   return (
     <section className="home">
@@ -17,22 +22,22 @@ const Home = async () => {
           <Header
             type="greeting"
             title="Welcome"
-            user={loggedInUser?.name.split(" ")[0] || "Guest"}
+            user={loggedInUser.firstName +" | "+loggedInUser.lastName} 
             subtext="Access and manage your account and transactions efficiently."
           />
 
           <TotalBalanceBox
-            accounts={[]}
-            totalBanks={1}
-            totalCurrentBalance={9889}
+            accounts={accountData}
+            totalBanks={accounts.totalBanks}
+            totalCurrentBalance={accounts.totalCurrentBalance}
           />
         </header>
         USER TRANSACTION
       </div>
       <RightSideBar
-        user={loggedInUser!}
-        transactions={[]}
-        banks={[{ currentBalance: 123 }, { currentBalance: 325 }]}
+        user={loggedInUser}
+        transactions={accounts.transactions}
+        banks={accountData.slice(0, 2)}
       />
     </section>
   );

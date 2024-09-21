@@ -17,7 +17,7 @@ const router=useRouter();
         className={type === "desktop" ? "footer_name" : "footer_name-mobile "}
       >
         <p className="font-bold text-xl text-gray-700">
-          {user?.name[0].toUpperCase()}
+          {user?.firstName[0].toUpperCase()}
         </p>
       </div>
 
@@ -25,7 +25,7 @@ const router=useRouter();
         className={type === "desktop" ? "footer_email" : "footer_email-mobile"}
       >
         <h1 className="text-14 truncate font-semibold text-gray-700">
-          {user.name}
+          {user.firstName}
         </h1>
 
         <h1 className="text-14 truncate font-normal text-gray-600">
