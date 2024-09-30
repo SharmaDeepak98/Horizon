@@ -3,7 +3,7 @@ import RightSideBar from "@/components/RightSideBar";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { get } from "http";
-import { getAccounts } from "@/lib/actions/bank.actions";
+import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
 import { useRouter } from "next/navigation";
 
 const Home = async ({searchParams:{id,page}}:SearchParamProps) => {
@@ -14,7 +14,10 @@ const Home = async ({searchParams:{id,page}}:SearchParamProps) => {
 
   const accountData = accounts.data;
   const appwriteItemId = (id as string) || accountData[0].appwriteItemId;
+  const account = await getAccount({ appwriteItemId });
 
+  console.log("accountData", accountData);
+  console.log("account", account);
   return (
     <section className="home">
       <div className="home-content">
@@ -22,7 +25,7 @@ const Home = async ({searchParams:{id,page}}:SearchParamProps) => {
           <Header
             type="greeting"
             title="Welcome"
-            user={loggedInUser.firstName +" | "+loggedInUser.lastName} 
+            user={loggedInUser.firstName +" "+ loggedInUser.lastName} 
             subtext="Access and manage your account and transactions efficiently."
           />
 
