@@ -119,6 +119,7 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
 
+
     return parseStringify({
       data: account,
       transactions: allTransactions,

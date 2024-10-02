@@ -5,8 +5,10 @@ import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { get } from "http";
 import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
 import { useRouter } from "next/navigation";
+import RecentTracsactions from "@/components/RecentTracsactions";
 
 const Home = async ({searchParams:{id,page}}:SearchParamProps) => {
+  const currentPage = Number(page as string) || 1;
   const loggedInUser = await getLoggedInUser();
   const accounts = await getAccounts({ userId: loggedInUser!.$id });
 
@@ -35,7 +37,15 @@ const Home = async ({searchParams:{id,page}}:SearchParamProps) => {
             totalCurrentBalance={accounts.totalCurrentBalance}
           />
         </header>
-        USER TRANSACTION
+        <RecentTracsactions
+        accounts={accountData}
+        transactions={accounts?.transactions}
+        appwriteItemId={appwriteItemId}
+        page={currentPage}
+        />
+
+
+
       </div>
       <RightSideBar
         user={loggedInUser}
