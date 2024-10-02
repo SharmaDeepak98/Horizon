@@ -6,13 +6,14 @@ import TransactionsTable from './TransactionsTable'
 import { Pagination } from './Pagination'
 const RecentTracsactions = ({
   accounts,
-  transactions = [],
   appwriteItemId,
+  transactions = [],
   page = 1,
 }: RecentTransactionsProps) => {
   const rowsPerPage = 10;
   const totalPages = Math.ceil(transactions.length / rowsPerPage);
 
+  console.log("DEBUG:->from recent transactions", transactions)
   const indexOfLastTransaction = page * rowsPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - rowsPerPage;
 

@@ -73,7 +73,7 @@ const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
     } catch (e) {
       console.log(e);
     } finally {
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 
@@ -99,7 +99,7 @@ const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
           </h1>
         </div>
       </header>
-       {user ? ( 
+       {user && type == 'sign-up'? ( 
         <div className="flex flex-col gap-4">
           <PlaidLink user={user!} variant="primary" />
         </div>
