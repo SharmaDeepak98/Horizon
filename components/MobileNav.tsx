@@ -41,7 +41,7 @@ const MobileNav = ({ user }: SiderbarProps) => {
               width={34}
               height={34}
             />
-            <h1 className="text-26 font-ibm-plex-serif font-bold ">Bestank</h1>
+            <h1 className="text-26 font-ibm-plex-serif font-bold ">Horizon</h1>
           </Link>
           <div className="mobilenav-sheet">
             <SheetClose asChild>

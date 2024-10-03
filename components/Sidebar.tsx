@@ -20,7 +20,7 @@ const Sidebar = ({ user }: SiderbarProps) => {
             height={34}
             className="size-[24px] max-xl:size-14"
           />
-          <h1 className="sidebar-logo">Bestank</h1>
+          <h1 className="sidebar-logo">Horizon</h1>
         </Link>
         {sidebarLinks.map((i) => {
           const isactive =

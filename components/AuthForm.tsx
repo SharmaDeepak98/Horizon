@@ -85,7 +85,7 @@ const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
           className="flex cursor-pointer gap-1  mb-8 items-center"
         >
           <Image src="/icons/logo.svg" alt="best-logo" width={34} height={34} />
-          <h1 className="text-26 font-ibm-plex-serif font-bold ">Bestank</h1>
+          <h1 className="text-26 font-ibm-plex-serif font-bold ">Horizon</h1>
         </Link>
 
         <div className="flex flex-col md:gap-3">
