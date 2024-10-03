@@ -10,8 +10,8 @@ const ibmPlexSerif = IBM_Plex_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Best Bank",
-  description: "Best Bank is best in the world.",
+  title: "Horizon",
+  description: "Horizon is best in the world.",
   icons:'/icons/logo.svg'
 };
 
