@@ -99,7 +99,7 @@ const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
           </h1>
         </div>
       </header>
-       {user && type == 'sign-up'? ( 
+       {user ? ( 
         <div className="flex flex-col gap-4">
           <PlaidLink user={user!} variant="primary" />
         </div>
