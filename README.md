@@ -1,7 +1,6 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
+I built this project by watching JS Mastery tutorial in [youtube](https://www.youtube.com/watch?v=PuOVqP_cjkE).
 ## Live Demo
-
 [![Vercel](https://vercel.com/button)](https://horizon-six-gamma.vercel.app/)
 
 ## Getting Started
