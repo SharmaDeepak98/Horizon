@@ -2,15 +2,17 @@ import Header from "@/components/Header";
 import RightSideBar from "@/components/RightSideBar";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
-import { get } from "http";
 import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import RecentTracsactions from "@/components/RecentTracsactions";
 
 const Home = async ({searchParams:{id,page}}:SearchParamProps) => {
   const currentPage = Number(page as string) || 1;
   const loggedInUser = await getLoggedInUser();
-  const accounts = await getAccounts({ userId: loggedInUser!.$id });
+  if (!loggedInUser) {
+    return null
+  }
+  const accounts = await getAccounts({ userId: loggedInUser?.$id });
 
   if (!accounts) return;
 
