@@ -3,14 +3,14 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 const Footer = ({ user, type = "desktop" }: FooterProps) => {
-const router=useRouter();
-    const handleLogout = async() => {
-// const loggedout = await logout();
-// if (loggedout) {
-//     router.push("/signin");
-
+  const router = useRouter();
+  const handleLogout = async () => {
+    const loggedout = await logout();
+    if (loggedout) {
+      router.push("/sign-in");
     }
-    
+  };
+
   return (
     <div className="footer">
       <div
@@ -33,7 +33,12 @@ const router=useRouter();
         </h1>
       </div>
       <div className="footer_image">
-        <Image src="/icons/logout.svg" fill alt="logout" onClick={handleLogout}/>
+        <Image
+          src="/icons/logout.svg"
+          fill
+          alt="logout"
+          onClick={handleLogout}
+        />
       </div>
     </div>
   );
