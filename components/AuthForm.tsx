@@ -137,7 +137,7 @@ const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
                         control={form.control}
                         name="state"
                         label="State"
-                        placeholder="e.g. California"
+                        placeholder="e.g. NY"
                       />
                       <CustomInput
                         control={form.control}
@@ -158,7 +158,7 @@ const AuthForm = ({ type }: { type: "sign-in" | "sign-up" }) => {
                         control={form.control}
                         name="ssn"
                         label="SSN"
-                        placeholder="e.g. 123-45-6789"
+                        placeholder="e.g. 123123123"
                       />
                     </div>
                   </div>
